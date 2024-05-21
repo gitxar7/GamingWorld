@@ -1,0 +1,44 @@
+function adminSignIn() {
+
+    var ad = document.getElementById("ad");
+    var si = document.getElementById("si");
+    var su = document.getElementById("su");
+
+    ad.className = "offset-lg-3 offset-0 col-12 col-lg-6 rounded-2 px-2 py-3 bg-black bg-opacity-50";
+    si.className = "d-none";
+    su.className = "d-none";
+}
+
+function adminSignInX() {
+    alert("cxxcxcx")
+    var email = document.getElementById("emailAdmin");
+    var password = document.getElementById("passwordAdmin");
+    var rememberMe = document.getElementById("rememberMeAdmin");
+    var adX = document.getElementById("adX");
+
+    var f = new FormData();
+    f.append("e", email.value);
+    f.append("p", password.value);
+    f.append("r", rememberMe.checked);
+
+    var r = new XMLHttpRequest();
+
+    r.onreadystatechange = function() {
+        if (r.readyState == 4) {
+            adX.innerHTML = ""
+            var t = r.responseText;
+            if (t == "Success") {
+                var adminVerificationModal = document.getElementById("verificationModal");
+                av = new bootstrap.Modal(adminVerificationModal);
+                av.show();
+            } else {
+                alert(t);
+            }
+        }else{
+            adX.innerHTML = "Loading....."
+        }
+    }
+
+    r.open("POST", "adminVerificationProcess.php", true);
+    r.send(f);
+}
